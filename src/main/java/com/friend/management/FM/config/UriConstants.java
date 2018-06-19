@@ -22,6 +22,8 @@ public class UriConstants {
 	public static final String CHECKFRIENDSHIP = "/friendship";
 	
 	public static final String FRIENDLIST = "/friendlist";
+	
+	public static final String COMMONFRIEND = "/commonfriend";
 
 	
 }

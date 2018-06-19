@@ -11,4 +11,6 @@ public interface RelationshipDao {
 	public List<Relationship> checkFriendship(Long userid1, Long userid2);
 
 	public List<Relationship> friendList(Long userid1);
+	
+	public List<Relationship> commonFriend(Long userid1, Long userid2);
 }

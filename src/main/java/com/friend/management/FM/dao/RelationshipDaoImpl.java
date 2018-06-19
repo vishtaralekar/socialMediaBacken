@@ -1,5 +1,6 @@
 package com.friend.management.FM.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -23,7 +24,8 @@ public class RelationshipDaoImpl implements RelationshipDao {
 		try {
 			relationshipRepository.save(relationship);
 		} catch (Exception e) {
-			String error = String.format("Error occured while saving accept friend request with name [%s] ",relationship.getRuserid2());
+			String error = String.format("Error occured while saving accept friend request with name [%s] ",
+					relationship.getRuserid2());
 			logger.error(error);
 			throw e;
 
@@ -32,13 +34,30 @@ public class RelationshipDaoImpl implements RelationshipDao {
 
 	@Override
 	public List<Relationship> checkFriendship(Long userid1, Long userid2) {
-		
-		return relationshipRepository.find(userid1,userid2);
+
+		return relationshipRepository.find(userid1, userid2);
 	}
+
+	// public List<Relationship> friendList(String string) {
+
+	public List<Relationship> friendList(Long ruserid) {
+
+		List<Relationship> friendList1 = new ArrayList<>();
+		friendList1 = relationshipRepository.findFriendship(ruserid);
+
+		return friendList1;
+	}
+	/*@Override
+	public List<Relationship> commonFriend(Long userid1, Long userid2) {
+
+		return relationshipRepository.find(userid1, userid2);
+	}
+*/
 	@Override
-	public List<Relationship> friendList(Long userid1) {
+	public List<Relationship> commonFriend(Long userid1, Long userid2) {
 		
-		return relationshipRepository.findFriendship(userid1);
+		
+		return relationshipRepository.find(userid1, userid2);
 	}
-	
+
 }
