@@ -32,7 +32,7 @@ public class RelationshipService {
 		String message = null;
 		try {
 
-			Relationship relationship = wrapRelationship(null, relationshipModel, null, null);
+			Relationship relationship = wrapRelationship(null, relationshipModel);
 
 			relationshipDaoImpl.savefriend(relationship);
 
@@ -44,11 +44,10 @@ public class RelationshipService {
 		return new SmResponseStatus(message);
 	}
 
-	private Relationship wrapRelationship(Long status, RelationshipModel relationshipModel, User ruserid1,
-			User ruserid2) {
+	private Relationship wrapRelationship(Long status, RelationshipModel relationshipModel) {
 
 		Relationship relation = new Relationship();
-		
+
 		relation.setStatus(relationshipModel.getStatus());
 		relation.setActionuserid(relation.getActionuserid());
 
@@ -75,13 +74,15 @@ public class RelationshipService {
 			return true;
 	}
 
-	public List<RelationshipModel> getFriedlist(FriendsReqBody email)
-	{
+	public List<RelationshipModel> getFriedlist(FriendsReqBody email) {
 		User userOne = userImpl.getUSerByEmailId(email.getEmail());
-	
-		List<Relationship>  rlist=	relationshipDaoImpl.friendList(userOne.getUserId());
-		logger.info(" friendlist : "+rlist.toString());
+
+		List<Relationship> rlist = relationshipDaoImpl.friendList(userOne.getUserId());
+
+		logger.info(" friendlist : " + rlist.toString());
+
 		return null;
+
 	}
-	
+
 }
