@@ -1,18 +1,34 @@
 package com.friend.management.FM.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "RELATIONSHIP")
-public class Relationship {
-	
-	
+@Embeddable
+@Table(name = "RELATIONSHIP1", uniqueConstraints = { @UniqueConstraint(columnNames = { "ruserid1", "ruserid2" }) })
+public class Relationship implements Serializable {
 
-	//@OneToOne(targetEntity = User.class, cascade = CascadeType.MERGE)
-	//@PrimaryKeyJoinColumn // (name = "userId", referencedColumnName = "userId")
-	 @Column(name = "ruserid1")
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long relationShipId;
+
+	// @OneToOne(targetEntity = User.class, cascade = CascadeType.MERGE)
+	// @PrimaryKeyJoinColumn // (name = "userId", referencedColumnName =
+	// "userId")
+	@Column(name = "ruserid1")
 	private Long ruserid1;
 
 	// @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
@@ -26,7 +42,6 @@ public class Relationship {
 	@Column(name = "action_user_id ")
 	private Long actionuserid;
 
-	
 	public Long getRuserid1() {
 		return ruserid1;
 	}

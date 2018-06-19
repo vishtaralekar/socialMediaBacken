@@ -10,39 +10,39 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "USER")
 public class User implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long userId;
-	
+
 	@Column(name = "USERNAME")
 	private String username;
-	
+
 	@Column(name = "EMAIL_ID")
 	private String emailId;
-	
+
 	@Column(name = "FRIENDS")
 	private String friends;
-	
+
 	@Column(name = "FOLLOWED")
 	private String followed;
-	
+
 	@Column(name = "create_dt", updatable = false)
-	@CreatedDate
+	@CreationTimestamp
 	private LocalDateTime create_dt;
-	
+
 	@Column(name = "last_update_dt")
-	
+	@UpdateTimestamp
 	private LocalDateTime last_update_dt;
 
-	
 	public Long getUserId() {
 		return userId;
 	}
@@ -103,7 +103,4 @@ public class User implements Serializable {
 		return serialVersionUID;
 	}
 
-	
-
-	
 }
