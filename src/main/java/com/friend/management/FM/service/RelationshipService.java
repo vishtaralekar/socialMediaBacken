@@ -78,11 +78,24 @@ public class RelationshipService {
 	}
 
 	public FriendListResponse getFriedlist(FriendsReqBody email) {
-		User userTofindFrienlist = userImpl.getUSerByEmailId(email.getEmail());
-		logger.info("serching for email :" + email + "got user " + userTofindFrienlist);
+
+		String myEmail = email.getEmail();
+		logger.info("serching for email :" + email);
+
+		FriendListResponse response = findfriendByEmail(myEmail);
+
+		return response;
+
+	}
+
+	private FriendListResponse findfriendByEmail(String myEmail) {
+		List<String> friends = new ArrayList<>();
+
+		User userTofindFrienlist = userImpl.getUSerByEmailId(myEmail);
+
 		List<Relationship> rlist = relationshipDaoImpl.friendList(userTofindFrienlist.getUserId());
 		logger.info(" friendlist : " + rlist.toString());
-
+		logger.info("got user " + userTofindFrienlist);
 		FriendListResponse response = new FriendListResponse();
 		response.setCount(rlist.size());
 
@@ -92,7 +105,6 @@ public class RelationshipService {
 			response.setSuccess(true);
 		}
 
-		List<String> friends = new ArrayList<>();
 		response.setFriends(friends);
 
 		// preparing list of all user
@@ -109,9 +121,7 @@ public class RelationshipService {
 				friends.add(userTwo.getEmailId());
 			}
 		}
-
 		return response;
-
 	}
 
 	/*
@@ -123,7 +133,7 @@ public class RelationshipService {
 	 * 
 	 * return user; }
 	 */
-	public boolean commonfriend(CommonFriendsModel commonfriend) {
+	public FriendListResponse commonfriend(CommonFriendsModel commonfriend) {
 		logger.info("inside Commonfriend   :");
 		if (commonfriend.getFriends().isEmpty() || commonfriend.getFriends().size() > 2)
 
@@ -131,14 +141,23 @@ public class RelationshipService {
 
 		User user1 = userImpl.getUSerByEmailId(commonfriend.getFriends().get(0));
 		User user2 = userImpl.getUSerByEmailId(commonfriend.getFriends().get(1));
+		FriendListResponse firstResponse = findfriendByEmail(user1.getEmailId());
+		FriendListResponse secondResponse = findfriendByEmail(user2.getEmailId());
+		FriendListResponse finalresponse = new FriendListResponse();
 
-		List<Relationship> commonfriendlist = relationshipDaoImpl.commonFriend(user1.getUserId(), user2.getUserId());
+		if (firstResponse.isSuccess() && secondResponse.isSuccess()) {
+			finalresponse.setSuccess(true);
+		} else {
+			finalresponse.setSuccess(false);
+		}
 
-		logger.info("Common friends :  " + commonfriendlist.toString());
-		if (commonfriendlist.isEmpty())
-			return false;
-		else
-			return true;
+		List<String> commonFriends = new ArrayList<>(firstResponse.getFriends());
+
+		commonFriends.retainAll(secondResponse.getFriends());
+
+		finalresponse.setFriends(commonFriends);
+		finalresponse.setCount(commonFriends.size());
+		return finalresponse;
 	}
 
 }
