@@ -103,4 +103,12 @@ public class User implements Serializable {
 		return serialVersionUID;
 	}
 
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", username=" + username + ", emailId=" + emailId + ", friends=" + friends
+				+ ", followed=" + followed + ", create_dt=" + create_dt + ", last_update_dt=" + last_update_dt + "]";
+	}
+	
+	
+
 }

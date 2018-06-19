@@ -3,6 +3,8 @@ package com.friend.management.FM.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,7 @@ public class UserDaoImpl implements UserDao {
 		return user;
 
 	}
+
 	@Override
 	public List<User> getUserList() {
 
@@ -58,6 +61,15 @@ public class UserDaoImpl implements UserDao {
 		}
 		return userList;
 	}
-	
+
+	@Override
+	public User getUSerByEmailId(String email_id) {
+
+		userRepository.find(email_id);
+		if (userRepository.find(email_id).isEmpty())
+			return null;
+
+		return userRepository.find(email_id).get(0);
+	}
 
 }

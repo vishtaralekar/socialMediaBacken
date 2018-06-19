@@ -9,11 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Entity
 @Embeddable
-@Table(name = "RELATIONSHIP1", uniqueConstraints = { @UniqueConstraint(columnNames = { "ruserid1", "ruserid2" }) })
+@Table(name = "RELATIONSHIP1")
 public class Relationship implements Serializable {
 
 	/**
@@ -72,6 +71,12 @@ public class Relationship implements Serializable {
 
 	public void setActionuserid(Long actionuserid) {
 		this.actionuserid = actionuserid;
+	}
+
+	@Override
+	public String toString() {
+		return "Relationship [relationShipId=" + relationShipId + ", ruserid1=" + ruserid1 + ", ruserid2=" + ruserid2
+				+ ", status=" + status + ", actionuserid=" + actionuserid + "]";
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.friend.management.FM.dao;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +28,11 @@ public class RelationshipDaoImpl implements RelationshipDao {
 			throw e;
 
 		}
+	}
+
+	@Override
+	public List<Relationship> checkFriendship(Long userid1, Long userid2) {
+		
+		return relationshipRepository.find(userid1,userid2);
 	}
 }
