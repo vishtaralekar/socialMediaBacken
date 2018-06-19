@@ -48,11 +48,7 @@ public class RelationshipService {
 			User ruserid2) {
 
 		Relationship relation = new Relationship();
-		/*
-		 * if(ruemailId != null) { relation.setRuemailId1(ruemailId); }
-		 */
-		// relation.setRuserid1(ruserid1);
-		// relation.setRuserid2(ruserid2);
+		
 		relation.setStatus(relationshipModel.getStatus());
 		relation.setActionuserid(relation.getActionuserid());
 
@@ -79,4 +75,13 @@ public class RelationshipService {
 			return true;
 	}
 
+	public List<RelationshipModel> getFriedlist(FriendsReqBody email)
+	{
+		User userOne = userImpl.getUSerByEmailId(email.getEmail());
+	
+		List<Relationship>  rlist=	relationshipDaoImpl.friendList(userOne.getUserId());
+		logger.info(" friendlist : "+rlist.toString());
+		return null;
+	}
+	
 }

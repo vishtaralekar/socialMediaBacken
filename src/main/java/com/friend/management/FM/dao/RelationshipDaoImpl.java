@@ -35,4 +35,10 @@ public class RelationshipDaoImpl implements RelationshipDao {
 		
 		return relationshipRepository.find(userid1,userid2);
 	}
+	@Override
+	public List<Relationship> friendList(Long userid1) {
+		
+		return relationshipRepository.findFriendship(userid1);
+	}
+	
 }

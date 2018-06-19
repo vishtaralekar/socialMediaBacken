@@ -24,14 +24,9 @@ public class Relationship implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long relationShipId;
 
-	// @OneToOne(targetEntity = User.class, cascade = CascadeType.MERGE)
-	// @PrimaryKeyJoinColumn // (name = "userId", referencedColumnName =
-	// "userId")
 	@Column(name = "ruserid1")
 	private Long ruserid1;
 
-	// @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
-	// @PrimaryKeyJoinColumn(name = "userId", referencedColumnName = "userId")
 	@Column(name = "ruserid2")
 	private Long ruserid2;
 
