@@ -24,6 +24,11 @@ public class UriConstants {
 	public static final String FRIENDLIST = "/friendlist";
 	
 	public static final String COMMONFRIEND = "/commonfriend";
+	
+	public static final String SUBSCRIBE = "/subscribe";
 
+	public static final String BLOCK = "/block";
+
+	public static final String RECEIVEUPDATE = "/receiveupdate";
 	
 }

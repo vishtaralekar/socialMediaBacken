@@ -47,17 +47,40 @@ public class RelationshipDaoImpl implements RelationshipDao {
 
 		return friendList1;
 	}
-	/*@Override
+
+	/*
+	 * @Override public List<Relationship> commonFriend(Long userid1, Long
+	 * userid2) {
+	 * 
+	 * return relationshipRepository.find(userid1, userid2); }
+	 */
+	@Override
 	public List<Relationship> commonFriend(Long userid1, Long userid2) {
 
 		return relationshipRepository.find(userid1, userid2);
 	}
-*/
+
 	@Override
-	public List<Relationship> commonFriend(Long userid1, Long userid2) {
+	public List<Relationship> subFriend(Long userid1, Long userid2) {
+
+		return relationshipRepository.subscribe(userid1, userid2);
+	}
+
+	@Override
+	public List<Relationship> blockFriend(Long userid1, Long userid2) {
+
+		return relationshipRepository.blcokfriend(userid1, userid2);
+	}
+
+	@Override
+	public List<Relationship> reciveUpadate(Long userid1) {
+		return relationshipRepository.receiveupadte(userid1);
+	}
+
+	@Override
+	public void updaterelation(Relationship relationship) {
 		
-		
-		return relationshipRepository.find(userid1, userid2);
+		relationshipRepository.save(relationship);
 	}
 
 }

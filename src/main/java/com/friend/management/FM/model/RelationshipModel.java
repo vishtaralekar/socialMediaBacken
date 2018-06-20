@@ -1,8 +1,6 @@
 package com.friend.management.FM.model;
 
 public class RelationshipModel {
-	
-	
 
 	private AddToUserRequest ruserid1;
 
@@ -44,16 +42,15 @@ public class RelationshipModel {
 		this.actionuserid = actionuserid;
 	}
 
-	/*public void warpDetails(Relationship relationship) {
-		AddToUserRequest addreq = new AddToUserRequest();
-		addreq.wrapDetails(relationship.getRuserid1());
-		this.ruserid1 = addreq;
-
-		AddToUserRequest addreq1 = new AddToUserRequest();
-		addreq1.wrapDetails(relationship.getRuserid2());
-		this.ruserid2 = addreq1;
-
-		this.status = relationship.getStatus();
-		this.actionuserid = relationship.getActionuserid();
-	}*/
+	/*
+	 * public void warpDetails(Relationship relationship) { AddToUserRequest
+	 * addreq = new AddToUserRequest();
+	 * addreq.wrapDetails(relationship.getRuserid1()); this.ruserid1 = addreq;
+	 * 
+	 * AddToUserRequest addreq1 = new AddToUserRequest();
+	 * addreq1.wrapDetails(relationship.getRuserid2()); this.ruserid2 = addreq1;
+	 * 
+	 * this.status = relationship.getStatus(); this.actionuserid =
+	 * relationship.getActionuserid(); }
+	 */
 }

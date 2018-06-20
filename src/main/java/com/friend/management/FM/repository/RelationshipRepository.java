@@ -8,16 +8,26 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.friend.management.FM.domain.Relationship;
+
 @Repository
-public interface RelationshipRepository extends JpaRepository<Relationship, Long> { 
+public interface RelationshipRepository extends JpaRepository<Relationship, Long> {
 
 	@Query("SELECT p FROM Relationship p WHERE (ruserid1 =:ruserid1 and ruserid2=:ruserid2)or ((ruserid1 =:ruserid2 and ruserid2=:ruserid1)) and status =1")
-    public List<Relationship> find(@Param("ruserid1") Long ruserid1,@Param("ruserid2") Long ruserid2);
+	public List<Relationship> find(@Param("ruserid1") Long ruserid1, @Param("ruserid2") Long ruserid2);
 
 	@Query("SELECT p FROM Relationship p WHERE (ruserid1 =:ruserid1 or ruserid2=:ruserid1) and status =1")
-    public List<Relationship> findFriendship(@Param("ruserid1") Long userid);
-	
+	public List<Relationship> findFriendship(@Param("ruserid1") Long userid);
+
 	@Query("SELECT p FROM Relationship p WHERE (ruserid1 =:ruserid1 and ruserid2=:ruserid2)or ((ruserid1 =:ruserid2 and ruserid2=:ruserid1)) and status =1 ")
-    public List<Relationship> commonFriend(@Param("ruserid1") Long ruserid1,@Param("ruserid2") Long ruserid2);
+	public List<Relationship> commonFriend(@Param("ruserid1") Long ruserid1, @Param("ruserid2") Long ruserid2);
+
+	@Query("SELECT p FROM Relationship p WHERE (ruserid1 =:ruserid1 and ruserid2=:ruserid2) and status =3")
+	public List<Relationship> subscribe(@Param("ruserid1") Long ruserid1, @Param("ruserid2") Long ruserid2);
+
+	@Query("SELECT p FROM Relationship p WHERE (ruserid1 =:ruserid1 and ruserid2=:ruserid2)")
+	public List<Relationship> blcokfriend(@Param("ruserid1") Long ruserid1, @Param("ruserid2") Long ruserid2);
+	
+	@Query("SELECT p FROM Relationship p WHERE (ruserid1 =:ruserid1) and (status =3 or status=1)")
+	public List<Relationship> receiveupadte(@Param("ruserid1") Long ruserid1);
 
 }

@@ -13,4 +13,12 @@ public interface RelationshipDao {
 	public List<Relationship> friendList(Long userid1);
 	
 	public List<Relationship> commonFriend(Long userid1, Long userid2);
+	
+	public List<Relationship> subFriend(Long userid1, Long userid2);
+
+	List<Relationship> blockFriend(Long userid1, Long userid2);
+
+	List<Relationship> reciveUpadate(Long userid1);
+	
+	public void updaterelation(Relationship relationship); 
 }

@@ -2,6 +2,8 @@ package com.friend.management.FM.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +15,15 @@ import com.friend.management.FM.dao.RelationshipDaoImpl;
 import com.friend.management.FM.dao.UserDaoImpl;
 import com.friend.management.FM.domain.Relationship;
 import com.friend.management.FM.domain.User;
+import com.friend.management.FM.model.BlockModel;
 import com.friend.management.FM.model.CommonFriendsModel;
 import com.friend.management.FM.model.FriendListResponse;
 import com.friend.management.FM.model.FriendsReqBody;
+import com.friend.management.FM.model.ReceiveUpdateModel;
+import com.friend.management.FM.model.ReceiveUpdateReqBody;
 import com.friend.management.FM.model.RelationshipModel;
 import com.friend.management.FM.model.SmResponseStatus;
+import com.friend.management.FM.model.SubscribeModel;
 
 @Service
 public class RelationshipService {
@@ -124,15 +130,6 @@ public class RelationshipService {
 		return response;
 	}
 
-	/*
-	 * private User wrapUser(Long userid, AddToUserRequest addToUserRequest) {
-	 * User user = new User();
-	 * 
-	 * if (userid != null) { user.setEmailId(addToUserRequest.getEmailId()); }
-	 * user.setEmailId(addToUserRequest.getEmailId());
-	 * 
-	 * return user; }
-	 */
 	public FriendListResponse commonfriend(CommonFriendsModel commonfriend) {
 		logger.info("inside Commonfriend   :");
 		if (commonfriend.getFriends().isEmpty() || commonfriend.getFriends().size() > 2)
@@ -160,4 +157,75 @@ public class RelationshipService {
 		return finalresponse;
 	}
 
+	public boolean subFriend(SubscribeModel subfriend) {
+		logger.info("inside subscribe Friend   :");
+
+		User userOne = userImpl.getUSerByEmailId(subfriend.getRequestor());
+		User userTwo = userImpl.getUSerByEmailId(subfriend.getTarget());
+
+		List<Relationship> subcriberlist = relationshipDaoImpl.subFriend(userOne.getUserId(), userTwo.getUserId());
+		logger.info("Subscribe status:::::  " + subcriberlist.toString());
+		if (subcriberlist.isEmpty())
+			return false;
+		else
+			return true;
+	}
+
+	public boolean blockFriend(BlockModel blockfriend) {
+		logger.info("inside block Friend   :");
+
+		User userOne = userImpl.getUSerByEmailId(blockfriend.getRequestor());
+		User userTwo = userImpl.getUSerByEmailId(blockfriend.getTarget());
+
+		List<Relationship> blocklist = relationshipDaoImpl.blockFriend(userOne.getUserId(), userTwo.getUserId());
+		logger.info("Block friends status:::::  " + blocklist.toString());
+		for (Relationship rela : blocklist) {
+			// relation save dao
+			rela.setStatus(3L);
+			relationshipDaoImpl.savefriend(rela);
+		}
+
+		if (blocklist.isEmpty())
+			return false;
+		else
+			return true;
+	}
+
+	public ReceiveUpdateModel receivefriend(ReceiveUpdateReqBody reveicefriend) {
+		logger.info("inside Receive update friend  :");
+
+		List<String> frienList = new ArrayList<>();
+		User user1 = userImpl.getUSerByEmailId(reveicefriend.getSender());
+
+		String text = reveicefriend.getText();
+		// parse this string and extract email id from it
+
+		Matcher m = Pattern.compile("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+").matcher(text);
+		while (m.find()) {
+			System.out.println(m.group());
+			frienList.add(m.group());
+		}
+
+		List<Relationship> resList = relationshipDaoImpl.reciveUpadate(user1.getUserId());
+
+		for (Relationship rel : resList) {
+			User user = userImpl.getUser(rel.getRuserid2());
+			frienList.add(user.getEmailId());
+		}
+
+		ReceiveUpdateModel firstupdateResponse = new ReceiveUpdateModel();
+
+		// when they are either friend or subscriber
+		if (frienList.isEmpty()) {
+			firstupdateResponse.setSuccess(false);
+
+		} else {
+			firstupdateResponse.setSuccess(true);
+		}
+
+		firstupdateResponse.setRecipient(frienList);
+
+		return firstupdateResponse;
+
+	}
 }
