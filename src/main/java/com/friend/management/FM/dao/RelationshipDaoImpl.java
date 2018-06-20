@@ -38,8 +38,6 @@ public class RelationshipDaoImpl implements RelationshipDao {
 		return relationshipRepository.find(userid1, userid2);
 	}
 
-	// public List<Relationship> friendList(String string) {
-
 	public List<Relationship> friendList(Long ruserid) {
 
 		List<Relationship> friendList1 = new ArrayList<>();
@@ -48,12 +46,6 @@ public class RelationshipDaoImpl implements RelationshipDao {
 		return friendList1;
 	}
 
-	/*
-	 * @Override public List<Relationship> commonFriend(Long userid1, Long
-	 * userid2) {
-	 * 
-	 * return relationshipRepository.find(userid1, userid2); }
-	 */
 	@Override
 	public List<Relationship> commonFriend(Long userid1, Long userid2) {
 
@@ -79,8 +71,7 @@ public class RelationshipDaoImpl implements RelationshipDao {
 
 	@Override
 	public void updaterelation(Relationship relationship) {
-		
+
 		relationshipRepository.save(relationship);
 	}
-
 }

@@ -181,7 +181,7 @@ public class RelationshipService {
 		logger.info("Block friends status:::::  " + blocklist.toString());
 		for (Relationship rela : blocklist) {
 			// relation save dao
-			rela.setStatus(3L);
+			rela.setStatus(4L);
 			relationshipDaoImpl.savefriend(rela);
 		}
 
