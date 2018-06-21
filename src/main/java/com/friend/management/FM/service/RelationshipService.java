@@ -110,7 +110,6 @@ public class RelationshipService {
 		} else {
 			response.setSuccess(true);
 		}
-
 		response.setFriends(friends);
 
 		// preparing list of all user
@@ -180,7 +179,7 @@ public class RelationshipService {
 		List<Relationship> blocklist = relationshipDaoImpl.blockFriend(userOne.getUserId(), userTwo.getUserId());
 		logger.info("Block friends status:::::  " + blocklist.toString());
 		for (Relationship rela : blocklist) {
-			// relation save dao
+			// relation to save Dao
 			rela.setStatus(4L);
 			relationshipDaoImpl.savefriend(rela);
 		}
@@ -218,11 +217,9 @@ public class RelationshipService {
 		// when they are either friend or subscriber
 		if (frienList.isEmpty()) {
 			firstupdateResponse.setSuccess(false);
-
 		} else {
 			firstupdateResponse.setSuccess(true);
 		}
-
 		firstupdateResponse.setRecipient(frienList);
 
 		return firstupdateResponse;
